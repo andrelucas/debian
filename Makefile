@@ -18,7 +18,7 @@ PARALLELS_BOX_FILENAMES := $(PARALLELS_TEMPLATE_FILENAMES:.json=$(BOX_SUFFIX))
 PARALLELS_BOX_FILES := $(foreach box_filename, $(PARALLELS_BOX_FILENAMES), $(PARALLELS_BOX_DIR)/$(box_filename))
 BOX_FILES := $(VMWARE_BOX_FILES) $(VIRTUALBOX_BOX_FILES) $(PARALLELS_BOX_FILES)
 ISO_FILES := $(shell sed -nE 's/^.*iso_name.*:\s*"([^"]+\.iso)".*$$/iso\/\1/p' $(TEMPLATE_FILENAMES))
-JIGDO_OPTS := $(shell test -f /etc/apt/sources.list && echo --noask)
+JIGDO_OPTS := $(shell test -f /etc/apt/sources.list && egrep debian /etc/apt/sources.list && echo --noask)
 
 box/vmware/%$(BOX_SUFFIX) box/virtualbox/%$(BOX_SUFFIX) box/parallels/%$(BOX_SUFFIX): %.json
 	bin/box build $<
