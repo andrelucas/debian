@@ -30,8 +30,8 @@ all: isos build assure deliver
 iso/%.iso:
 	mkdir -p iso
 	@cd iso && ( \
-		CURRENT_URL="http://cdimage.debian.org/debian-cd/$(shell echo "$@" | cut -d- -f2,3 --output-delimiter=/)/jigdo-dvd/$(notdir $(basename $@)).jigdo" ; \
-		ARCHIVE_URL="http://cdimage.debian.org/mirror/cdimage/archive/$(shell echo "$@" | cut -d- -f2,3 --output-delimiter=/)/jigdo-dvd/$(notdir $(basename $@)).jigdo" ; \
+		CURRENT_URL="http://cdimage.debian.org/debian-cd/$(shell echo "$@" | cut -d- -f2,3 | sed -e 's!-!/!g')/jigdo-dvd/$(notdir $(basename $@)).jigdo" ; \
+		ARCHIVE_URL="http://cdimage.debian.org/mirror/cdimage/archive/$(shell echo "$@" | cut -d- -f2,3 | sed -e 's!-!/!g')/jigdo-dvd/$(notdir $(basename $@)).jigdo" ; \
 		\
 		if curl -sfI "$$CURRENT_URL" >/dev/null ; then \
 			URL="$$CURRENT_URL" ; \
